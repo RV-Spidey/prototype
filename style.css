@@ -152,7 +152,7 @@ main p{
 
 #video-container .video iframe {
   width: 100%; /* Adjust this value as needed, e.g., 640px */
-  height: 600px; /* Adjust this value as needed, e.g., 360px */
+  height: 700px; /* Adjust this value as needed, e.g., 360px */
   max-width: 100%; /* Ensures responsiveness */
   max-height: 100%; /* Ensures responsiveness */
 }
