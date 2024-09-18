@@ -92,22 +92,28 @@ function closeAllSubMenus() {
 
 // Lazy load videos when they come into view
 function lazyLoadVideos() {
-    const videos = document.querySelectorAll('.video[data-src]');
+    const iframes = document.querySelectorAll('.video iframe[data-src]');
     const videoObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const video = entry.target;
-                video.src = video.getAttribute('data-src'); // Load the video by setting the src
-                video.removeAttribute('data-src'); // Remove the data-src attribute to avoid reloading
-                observer.unobserve(video); // Stop observing the video once it is loaded
+                const iframe = entry.target;
+                iframe.src = iframe.getAttribute('data-src'); // Load the iframe by setting the src
+                iframe.removeAttribute('data-src'); // Remove the data-src attribute to avoid reloading
+                observer.unobserve(iframe); // Stop observing once it's loaded
             }
         });
-    }, { threshold: 0.1 }); // Load video when 10% of it is visible
+    }, { threshold: 0.1 }); // Load iframe when 10% of it is visible
 
-    videos.forEach(video => {
-        videoObserver.observe(video);
+    iframes.forEach(iframe => {
+        videoObserver.observe(iframe);
     });
 }
+
+// Call lazy loading after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    lazyLoadVideos();
+});
+
 
 // Call lazy loading after DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
