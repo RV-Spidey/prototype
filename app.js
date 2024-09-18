@@ -82,24 +82,51 @@ function toggleSubMenu(button) {
     }
 }
 
-function showVideo(videoId) {
-    // Hide all videos
-    const videos = document.querySelectorAll('.video');
-    videos.forEach(video => video.style.display = 'none');
-
-    // Show the selected video
-    const videoToShow = document.getElementById(videoId);
-    if (videoToShow) {
-        videoToShow.style.display = 'block';
-    }
-}
-
 
 function closeAllSubMenus() {
     Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
         ul.classList.remove('show');
         ul.previousElementSibling.classList.remove('rotate');
     });
+}
+
+// Lazy load videos when they come into view
+function lazyLoadVideos() {
+    const videos = document.querySelectorAll('.video[data-src]');
+    const videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const video = entry.target;
+                video.src = video.getAttribute('data-src'); // Load the video by setting the src
+                video.removeAttribute('data-src'); // Remove the data-src attribute to avoid reloading
+                observer.unobserve(video); // Stop observing the video once it is loaded
+            }
+        });
+    }, { threshold: 0.1 }); // Load video when 10% of it is visible
+
+    videos.forEach(video => {
+        videoObserver.observe(video);
+    });
+}
+
+// Call lazy loading after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    lazyLoadVideos();
+});
+
+// Show video function (Lazy load aware)
+function showVideo(videoId) {
+    const videos = document.querySelectorAll('.video');
+    videos.forEach(video => video.style.display = 'none');
+
+    const videoToShow = document.getElementById(videoId);
+    if (videoToShow) {
+        videoToShow.style.display = 'block';
+        if (videoToShow.hasAttribute('data-src')) {
+            videoToShow.src = videoToShow.getAttribute('data-src');
+            videoToShow.removeAttribute('data-src');
+        }
+    }
 }
 
 document.addEventListener('contextmenu', function (e) {
