@@ -92,30 +92,27 @@ function closeAllSubMenus() {
 
 // Show video function
 function showVideo(videoId) {
+    // Hide all videos first
     const videos = document.querySelectorAll('.video');
     
-    videos.forEach(video => video.style.display = 'none'); // Hide all videos
+    videos.forEach(video => {
+        video.style.display = 'none'; // Hide all videos
+        const iframe = video.querySelector('iframe');
+        iframe.src = ''; // Clear src to stop any playing video
+    });
 
-    const videoToShow = document.getElementById(videoId);
+    // Show the selected video and set its src attribute
+    const selectedVideo = document.getElementById(videoId);
     
-    if (videoToShow) {
-        videoToShow.style.display = 'block'; // Show selected video
+    if (selectedVideo) {
+        selectedVideo.style.display = 'block'; // Show selected video
+        const iframe = selectedVideo.querySelector('iframe');
         
-        const iframe = videoToShow.querySelector('iframe');
-        
-        if (iframe && iframe.hasAttribute('data-src')) {
-            iframe.src = iframe.getAttribute('data-src'); // Set src to load video
-            iframe.removeAttribute('data-src'); // Remove data-src after loading
-            console.log(`Loading video: ${iframe.src}`); // Log for debugging
-        } else {
-            console.error(`Video with ID ${videoId} not found or already loaded.`);
+        if (iframe && !iframe.src) { // Only set src if it's not already set
+            iframe.src = iframe.dataset.src; // Set src from data-src attribute
         }
-        
-    } else {
-        console.error(`Video with ID ${videoId} not found.`);
     }
 }
-
 
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
