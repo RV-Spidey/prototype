@@ -115,12 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Call lazy loading after DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    lazyLoadVideos();
-});
-
-// Show video function (Lazy load aware)
 function showVideo(videoId) {
     const videos = document.querySelectorAll('.video');
     videos.forEach(video => video.style.display = 'none');
@@ -128,12 +122,14 @@ function showVideo(videoId) {
     const videoToShow = document.getElementById(videoId);
     if (videoToShow) {
         videoToShow.style.display = 'block';
-        if (videoToShow.hasAttribute('data-src')) {
-            videoToShow.src = videoToShow.getAttribute('data-src');
-            videoToShow.removeAttribute('data-src');
+        const iframe = videoToShow.querySelector('iframe');
+        if (iframe && iframe.hasAttribute('data-src')) {
+            iframe.src = iframe.getAttribute('data-src');
+            iframe.removeAttribute('data-src');
         }
     }
 }
+
 
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
