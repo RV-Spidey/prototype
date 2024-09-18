@@ -31,7 +31,7 @@ function closeAllSubMenus() {
 }
 
 function showVideo(videoId) {
-  console.log('Showing video with ID:', videoId); // Check if the function is triggered
+  console.log('Showing video with ID:', videoId); // Check if function is triggered
 
   const videos = document.querySelectorAll('#video-container .video');
 
@@ -47,12 +47,15 @@ function showVideo(videoId) {
   if (selectedVideo) {
     selectedVideo.style.display = 'block';
     const iframe = selectedVideo.querySelector('iframe');
-    if (iframe && iframe.src === '') {
-      iframe.src = iframe.dataset.src; // Set src from data-src attribute
-      console.log('Setting iframe src to:', iframe.src); // Check if src is set
+    if (iframe && !iframe.src) {
+      setTimeout(() => {
+        iframe.src = iframe.dataset.src; // Set src from data-src attribute
+        console.log('Setting iframe src to:', iframe.src); // Check if src is set
+      }, 100); // Adjust delay as needed
     }
   }
 }
+
 
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
