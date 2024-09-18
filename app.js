@@ -90,31 +90,7 @@ function closeAllSubMenus() {
     });
 }
 
-// Lazy load videos when they come into view
-function lazyLoadVideos() {
-    const iframes = document.querySelectorAll('.video iframe[data-src]');
-    
-    const videoObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const iframe = entry.target;
-                iframe.src = iframe.getAttribute('data-src'); // Load the iframe by setting the src
-                iframe.removeAttribute('data-src'); // Remove the data-src attribute to avoid reloading
-                observer.unobserve(iframe); // Stop observing once it's loaded
-            }
-        });
-    }, { threshold: 0.1 }); // Load iframe when 10% of it is visible
-
-    iframes.forEach(iframe => {
-        videoObserver.observe(iframe);
-    });
-}
-
-// Call lazy loading after DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    lazyLoadVideos();
-});
-
+// Show video function
 function showVideo(videoId) {
     const videos = document.querySelectorAll('.video');
     
@@ -130,6 +106,7 @@ function showVideo(videoId) {
         if (iframe && iframe.hasAttribute('data-src')) {
             iframe.src = iframe.getAttribute('data-src'); // Set src to load video
             iframe.removeAttribute('data-src'); // Remove data-src after loading
+            console.log(`Loading video: ${iframe.src}`); // Log for debugging
         } else {
             console.error(`Video with ID ${videoId} not found or already loaded.`);
         }
