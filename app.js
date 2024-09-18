@@ -90,29 +90,13 @@ function closeAllSubMenus() {
     });
 }
 
-// Show video function
 function showVideo(videoId) {
-    // Hide all videos first
-    const videos = document.querySelectorAll('.video');
-    
-    videos.forEach(video => {
-        video.style.display = 'none'; // Hide all videos
-        const iframe = video.querySelector('iframe');
-        iframe.src = ''; // Clear src to stop any playing video
-    });
-
-    // Show the selected video and set its src attribute
-    const selectedVideo = document.getElementById(videoId);
-    
-    if (selectedVideo) {
-        selectedVideo.style.display = 'block'; // Show selected video
-        const iframe = selectedVideo.querySelector('iframe');
-        
-        if (iframe && !iframe.src) { // Only set src if it's not already set
-            iframe.src = iframe.dataset.src; // Set src from data-src attribute
+            var videos = document.querySelectorAll('.video');
+            videos.forEach(function(video) {
+                video.style.display = 'none';
+            });
+            document.getElementById(videoId).style.display = 'block';
         }
-    }
-}
 
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
