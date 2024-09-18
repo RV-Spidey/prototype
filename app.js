@@ -31,10 +31,10 @@ function closeAllSubMenus() {
 }
 
 function showVideo(videoId) {
-  // Get all video elements
+  console.log('Showing video with ID:', videoId); // Check if the function is triggered
+
   const videos = document.querySelectorAll('#video-container .video');
 
-  // Hide all videos and remove their src attribute
   videos.forEach(video => {
     video.style.display = 'none';
     const iframe = video.querySelector('iframe');
@@ -43,16 +43,17 @@ function showVideo(videoId) {
     }
   });
 
-  // Show the selected video and set its src attribute
   const selectedVideo = document.getElementById(videoId);
   if (selectedVideo) {
     selectedVideo.style.display = 'block';
     const iframe = selectedVideo.querySelector('iframe');
     if (iframe && iframe.src === '') {
       iframe.src = iframe.dataset.src; // Set src from data-src attribute
+      console.log('Setting iframe src to:', iframe.src); // Check if src is set
     }
   }
 }
+
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
 });
