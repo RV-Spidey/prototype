@@ -93,6 +93,7 @@ function closeAllSubMenus() {
 // Lazy load videos when they come into view
 function lazyLoadVideos() {
     const iframes = document.querySelectorAll('.video iframe[data-src]');
+    
     const videoObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -116,16 +117,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function showVideo(videoId) {
     const videos = document.querySelectorAll('.video');
-    videos.forEach(video => video.style.display = 'none');
+    
+    videos.forEach(video => video.style.display = 'none'); // Hide all videos
 
     const videoToShow = document.getElementById(videoId);
+    
     if (videoToShow) {
-        videoToShow.style.display = 'block';
+        videoToShow.style.display = 'block'; // Show selected video
+        
         const iframe = videoToShow.querySelector('iframe');
+        
         if (iframe && iframe.hasAttribute('data-src')) {
-            iframe.src = iframe.getAttribute('data-src');
-            iframe.removeAttribute('data-src');
+            iframe.src = iframe.getAttribute('data-src'); // Set src to load video
+            iframe.removeAttribute('data-src'); // Remove data-src after loading
+        } else {
+            console.error(`Video with ID ${videoId} not found or already loaded.`);
         }
+        
     } else {
         console.error(`Video with ID ${videoId} not found.`);
     }
