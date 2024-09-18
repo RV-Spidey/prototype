@@ -114,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
     lazyLoadVideos();
 });
 
-
 function showVideo(videoId) {
     const videos = document.querySelectorAll('.video');
     videos.forEach(video => video.style.display = 'none');
@@ -127,6 +126,8 @@ function showVideo(videoId) {
             iframe.src = iframe.getAttribute('data-src');
             iframe.removeAttribute('data-src');
         }
+    } else {
+        console.error(`Video with ID ${videoId} not found.`);
     }
 }
 
