@@ -2,7 +2,7 @@ const toggleButton = document.getElementById('toggle-btn');
 const sidebar = document.getElementById('sidebar');
 const userName = localStorage.getItem('userName');
 document.getElementById('userElement').textContent = userName || '';
-
+document.getElementById('userElement1').textContent = "User: "+userName;
 // Ensure the secret key is set in localStorage, otherwise, no comparison can be made.
 const ____________________________________________________________________________________________________________________________________ = localStorage.getItem('____________________________________________________________________________________________________________________________________') || null;
 
@@ -60,7 +60,6 @@ function checkKey() {
 document.addEventListener('DOMContentLoaded', (event) => {
     checkKey();
 });
-
 // Sidebar toggle functions (unchanged)
 function toggleSidebar() {
     sidebar.classList.toggle('close');
@@ -81,6 +80,23 @@ function toggleSubMenu(button) {
         toggleButton.classList.toggle('rotate');
     }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Select all submenu links
+  const submenuLinks = document.querySelectorAll("#sidebar .sub-menu a");
+
+  // Add click event to each submenu link
+  submenuLinks.forEach(link => {
+    link.addEventListener("click", function() {
+      // Remove 'active' class from all submenu links
+      submenuLinks.forEach(item => item.classList.remove("active"));
+
+      // Add 'active' class to the clicked link
+      this.classList.add("active");
+    });
+  });
+});
+
 
 
 function showVideo(videoId) {
