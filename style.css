@@ -23,6 +23,7 @@ body{
   display: grid;
   grid-template-columns: auto 1fr;
 }
+
 ::-webkit-scrollbar-thumb
 #sidebar{
   box-sizing: border-box;
@@ -117,6 +118,20 @@ body{
 #sidebar .sub-menu a{
   padding-left: 2em;
 }
+/* Active state for main menu */
+/* More specific CSS for active state of main menu */
+#sidebar ul li.active > a {
+  color: var(--accent-clr);          /* Blue color for active menu item text */
+  background-color: var(--hover-clr); /* Optional: background color for active menu item */
+}
+
+/* Active state for submenu */
+#sidebar .sub-menu a.active {
+  color: var(--accent-clr);           /* Blue color for active submenu item text */
+  background-color: var(--hover-clr); /* Optional background color */
+}
+
+
 #toggle-btn{
   margin-left: auto;
   padding: 1em;
@@ -157,7 +172,9 @@ main p{
   max-height: 100%; /* Ensures responsiveness */
 }
 
-
+.logo1 {
+  display: none; /* Hide by default (desktop) */
+}
 
 @media(max-width: 800px){
   body{
@@ -165,6 +182,14 @@ main p{
   }
   main{
     padding: 2em 1em 60px 1em;
+  }
+  .logo1 {
+    display: block;
+    padding: 1em;
+    background-color: var(--hover-clr);
+    color: var(--text-clr);
+    grid-row: 1; /* Place logo in the first row */
+    font-size: 1.3em; /* Adjust font size as needed */
   }
   .container{
     border: none;
@@ -176,6 +201,7 @@ main p{
     max-width: 100%; /* Ensures responsiveness */
     max-height: 100%; /* Ensures responsiveness */
   }
+
   #sidebar{
     height: 60px;
     width: 100%;
